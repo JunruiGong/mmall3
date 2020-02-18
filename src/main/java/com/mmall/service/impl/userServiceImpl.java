@@ -194,4 +194,15 @@ public class userServiceImpl implements IUserService {
         return ServerResponse.createBySuccess(user);
     }
 
+    @Override
+    public ServerResponse<Integer> isAdmin(User user) {
+
+        if (user != null && user.getRole() == Const.Role.role_admin) {
+            return ServerResponse.createBySuccess();
+        } else {
+            return ServerResponse.createByErrorMessage("该账号非管理员账号");
+        }
+    }
+
+
 }

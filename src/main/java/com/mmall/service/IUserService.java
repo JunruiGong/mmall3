@@ -25,5 +25,7 @@ public interface IUserService {
 
     ServerResponse<User> getInfo(Integer userId);
 
+    ServerResponse<Integer> isAdmin(User user);
+
 
 }
