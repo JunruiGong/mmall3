@@ -25,12 +25,20 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    public IUserService iUserService;
+    private IUserService iUserService;
 
     @Autowired
-    public ICategoryService iCategoryService;
+    private ICategoryService iCategoryService;
 
 
+    /**
+     * 添加商品类别
+     *
+     * @param httpSession  httpSession
+     * @param categoryName categoryName
+     * @param parentId     parentId
+     * @return ServerResponse
+     */
     @RequestMapping("add_category.do")
     @ResponseBody
     public ServerResponse addCategory(HttpSession httpSession,
@@ -53,6 +61,14 @@ public class CategoryController {
     }
 
 
+    /**
+     * 更新商品类别的名称
+     *
+     * @param httpSession  httpSession
+     * @param categoryName categoryName
+     * @param categoryId   categoryId
+     * @return ServerResponse
+     */
     @RequestMapping("update_category_name.do")
     @ResponseBody
     public ServerResponse updateCategoryName(HttpSession httpSession,
@@ -75,6 +91,14 @@ public class CategoryController {
 
     }
 
+
+    /**
+     * 查询当前节点的子节点及与该子节点平级的节点
+     *
+     * @param httpSession httpSession
+     * @param categoryId  categoryId
+     * @return ServerResponse
+     */
     @RequestMapping("get_children_parallel_category.do")
     @ResponseBody
     public ServerResponse getChildrenParallelCategory(HttpSession httpSession,
@@ -97,6 +121,13 @@ public class CategoryController {
 
     }
 
+    /**
+     * 查询当前节点的子节点及该子节点的子节点
+     *
+     * @param httpSession
+     * @param categoryId
+     * @return
+     */
     @RequestMapping("get_deep_children_category.do")
     @ResponseBody
     public ServerResponse getDeepChildrenCategory(HttpSession httpSession,
@@ -116,7 +147,6 @@ public class CategoryController {
 
         // 查询当前节点的子节点及和该节点平级的节点
         return iCategoryService.getDeepChildrenCategory(categoryId);
-
     }
 
 
