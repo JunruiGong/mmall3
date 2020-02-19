@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * @Date: 2/18/20
  */
 @Controller
-@RequestMapping("/admin/product")
+@RequestMapping("/admin/product/")
 public class ProductController {
 
     @Autowired
@@ -65,6 +65,26 @@ public class ProductController {
             return adminResponse;
         } else {
             return iProductService.setSaleStatus(productId, status);
+        }
+    }
+
+
+    @RequestMapping("get_product_detail.do")
+    @ResponseBody
+    public ServerResponse getProductDetail(HttpSession httpSession, Integer productId) {
+
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆");
+        }
+
+        // 校验是否为管理员
+        ServerResponse<Integer> adminResponse = iUserService.isAdmin(user);
+        if (!adminResponse.isSuccess()) {
+            return adminResponse;
+        } else {
+             return iProductService.getProductDetail(productId);
         }
     }
 }
