@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -23,8 +21,8 @@ import java.util.Set;
  * @Date: 2/18/20
  */
 @Service("iCategoryService")
-public class categoryServiceImpl implements ICategoryService {
-    private Logger logger = LoggerFactory.getLogger(categoryServiceImpl.class);
+public class CategoryServiceImpl implements ICategoryService {
+    private Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     @Autowired
     public CategoryMapper categoryMapper;

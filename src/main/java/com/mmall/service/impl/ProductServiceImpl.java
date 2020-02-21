@@ -31,7 +31,7 @@ import java.util.List;
  * @Date: 2/18/20
  */
 @Service("iProductService")
-public class productServiceImpl implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ProductMapper productMapper;
