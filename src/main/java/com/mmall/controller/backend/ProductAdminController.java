@@ -10,6 +10,7 @@ import com.mmall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/admin/product/")
-public class ProductController {
+public class ProductAdminController {
 
     @Autowired
     private IUserService iUserService;
@@ -69,7 +70,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping("get_product_detail.do")
+    @RequestMapping("product_detail.do")
     @ResponseBody
     public ServerResponse getProductDetail(HttpSession httpSession, Integer productId) {
 
@@ -84,7 +85,51 @@ public class ProductController {
         if (!adminResponse.isSuccess()) {
             return adminResponse;
         } else {
-             return iProductService.getProductDetail(productId);
+            return iProductService.getProductDetail(productId);
         }
     }
+
+    @RequestMapping("product_list.do")
+    @ResponseBody
+    public ServerResponse getProductList(HttpSession httpSession,
+                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆");
+        }
+
+        // 校验是否为管理员
+        ServerResponse<Integer> adminResponse = iUserService.isAdmin(user);
+        if (!adminResponse.isSuccess()) {
+            return adminResponse;
+        } else {
+            return iProductService.getProductList(pageNum, pageSize);
+        }
+    }
+
+    @RequestMapping("search.do")
+    @ResponseBody
+    public ServerResponse searchProduct(HttpSession httpSession, String productName, Integer productId,
+                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆");
+        }
+
+        // 校验是否为管理员
+        ServerResponse<Integer> adminResponse = iUserService.isAdmin(user);
+        if (!adminResponse.isSuccess()) {
+            return adminResponse;
+        } else {
+            return iProductService.searchProduct(productName, productId, pageNum, pageSize);
+        }
+    }
+
+
 }
