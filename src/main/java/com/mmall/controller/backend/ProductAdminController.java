@@ -95,7 +95,7 @@ public class ProductAdminController {
         if (!adminResponse.isSuccess()) {
             return adminResponse;
         } else {
-            return iProductService.getProductDetail(productId);
+            return iProductService.getProductDetailManage(productId);
         }
     }
 
