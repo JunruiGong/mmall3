@@ -18,4 +18,6 @@ public interface ICartService {
     ServerResponse<CartVO> listCart(Integer userId);
 
     ServerResponse<CartVO> selectAllOrUnSelect(Integer userId, Integer productId, int checked);
+
+    ServerResponse<Integer> getCartProductCount(Integer userId);
 }

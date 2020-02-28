@@ -5,6 +5,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.ICartService;
+import com.mmall.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +78,7 @@ public class CartController {
 
     @RequestMapping(value = "select_all.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse selectAll(HttpSession httpSession) {
+    public ServerResponse<CartVO> selectAll(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
 
         if (user == null) {
@@ -89,7 +90,7 @@ public class CartController {
 
     @RequestMapping(value = "un_select_all.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse unSelectAll(HttpSession httpSession) {
+    public ServerResponse<CartVO> unSelectAll(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
 
         if (user == null) {
@@ -102,7 +103,7 @@ public class CartController {
 
     @RequestMapping(value = "select.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse select(HttpSession httpSession, Integer productId) {
+    public ServerResponse<CartVO> select(HttpSession httpSession, Integer productId) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
 
         if (user == null) {
@@ -114,7 +115,7 @@ public class CartController {
 
     @RequestMapping(value = "un_select.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse unSelect(HttpSession httpSession, Integer productId) {
+    public ServerResponse<CartVO> unSelect(HttpSession httpSession, Integer productId) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
 
         if (user == null) {
@@ -122,6 +123,17 @@ public class CartController {
         }
 
         return iCartService.selectAllOrUnSelect(user.getId(), productId, Const.Cart.UN_CHECKED);
+    }
+
+    @RequestMapping(value = "get_cart_product_count.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<Integer> getCartProductCount(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+
+        if (user == null) {
+            return ServerResponse.createBySuccess(0);
+        }
+        return iCartService.getCartProductCount(user.getId());
     }
 
 }

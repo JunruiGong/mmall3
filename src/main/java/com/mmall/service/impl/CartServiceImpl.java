@@ -108,6 +108,15 @@ public class CartServiceImpl implements ICartService {
         return this.listCart(userId);
     }
 
+    @Override
+    public ServerResponse<Integer> getCartProductCount(Integer userId) {
+        if (userId == 0) {
+            return ServerResponse.createBySuccess(0);
+        } else {
+            return ServerResponse.createBySuccess(cartMapper.selectCartProductCount(userId));
+        }
+    }
+
     private CartVO getCartVOLimit(Integer userId) {
 
         CartVO cartVO = new CartVO();
