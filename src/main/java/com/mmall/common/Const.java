@@ -26,6 +26,15 @@ public class Const {
 
     }
 
+    public interface Cart {
+        int CHECKED = 1;// 默认选中
+        int UN_CHECKED = 0;// 为选中该商品
+
+        String LIMIT_NUMBER_FAIL="LIMIT_NUMBER_FAIL";
+
+        String LIMIT_NUMBER_SUCCESS = "LIMIT_NUMBER_SUCCESS";
+    }
+
     public enum ProductStatusEnum {
         ON_SALE(1, "在线"),
         NON_SALE(2, "下架");
